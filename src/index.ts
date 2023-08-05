@@ -6,11 +6,19 @@
  */
 
 import Sigma from "sigma";
+
 import { Coordinates, EdgeDisplayData, NodeDisplayData } from "sigma/types";
+
 import Graph from "graphology";
 
 import data from "./data.json";
 
+data.nodes.forEach((node, index) => {
+  data["nodes"][index]['attributes']['x'] = Math.random() * 100;
+  data["nodes"][index]['attributes']['y'] = Math.random() * 100;
+})
+
+console.log(data)
 // 插件页面
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -22,11 +30,23 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    
       if (request.message) {
         console.log('Message received from background script: ', request.message);
         console.log("load Graph data")
         graph.import(data);
+        // circlepack.assign(graph);
+        // collectLayoutAsFlatArray(graph)
+        // forceLayout.assign(graph, {
+        //   maxIterations: 50,
+        //   settings: {
+        //     gravity: 10
+        //   }});
+        const layout = new ForceSupervisor(graph, {
+            settings: {
+              gravity: 0.002,
+              repulsion: 0.2
+            }});
+        layout.start()
       }
   });
 
@@ -43,6 +63,13 @@ const searchSuggestions = document.getElementById(
 const graph = new Graph();
 graph.import({});
 const renderer = new Sigma(graph, container);
+// import {collectLayoutAsFlatArray} from 'graphology-layout/utils';
+// import forceLayout from 'graphology-layout-force';
+import ForceSupervisor from 'graphology-layout-force/worker';
+
+// import {circlepack} from 'graphology-layout';
+
+// To directly assign the positions to the nodes:
 
 // Type and declare internal state:
 interface State {

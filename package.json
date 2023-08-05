@@ -11,6 +11,8 @@
   "dependencies": {
     "@types/chrome": "^0.0.243",
     "graphology": "^0.23.0",
+    "graphology-layout": "^0.6.1",
+    "graphology-layout-force": "^0.2.4",
     "sigma": "latest"
   },
   "devDependencies": {
