@@ -25,11 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-  document
-    .getElementById("Message2Page")
-    .addEventListener("click", function () {
-      chrome.runtime.sendMessage({ message: "genGraph" }, function (tabs) {});
-    });
+  document.getElementById("Message2Page").addEventListener("click", function () {
+    chrome.runtime.sendMessage({ message: "genGraph" }, function (tabs) { });
+  });
   // 插件页面
 
   // 创建与 background script 的长连接
